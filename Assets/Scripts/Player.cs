@@ -5,9 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    public float _speed = 3.5f;
+    private float _speed = 3.5f;
     [SerializeField]
     private GameObject _laserPrefab;
+
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
 
     public float horizontalInput;
     public float verticalInput;
@@ -17,8 +20,11 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
 
     [SerializeField]
-    private int _lives = 3; 
-    
+    private int _lives = 3;
+    private SpawnManager _spawnManager;
+    [SerializeField]
+    private bool _isTripleShotActive = false;
+
     public void Damage()
         {
             _lives--;
@@ -26,15 +32,32 @@ public class Player : MonoBehaviour
 
             if (_lives < 1)
             {
+            _spawnManager.OnPlayerDeath();
                 Destroy(this.gameObject);
             }
          }
+    public void TripleShotActive()
+    {
+        _isTripleShotActive = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
 
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isTripleShotActive = false;
+    }
     // Start is called before the first frame update
     void Start()
     {
         //take the current position = new pos (0, 0, 0)
         transform.position = new Vector3(0, 0, 0);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
+        if (_spawnManager == null)
+        {
+            Debug.LogError("the spawn manager is null");
+        }
         
     }
 
@@ -48,8 +71,19 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireRate;
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+
+            if (_isTripleShotActive == true)
+            {
+                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+            }
+
            
+
+
         }
 
         
@@ -61,8 +95,8 @@ public class Player : MonoBehaviour
         transform.Translate(Vector3.left * horizontalInput * _speed * Time.deltaTime);
         transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
 
-        float a = 10;
-        float b = 5;
+        
+        
 
         if (transform.position.y >= 0)
         {

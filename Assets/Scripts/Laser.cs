@@ -8,7 +8,9 @@ public class Laser : MonoBehaviour
     //speed variable of 8
     private float _speed = 8.0f;
     //variable at which the height the laser is destroyed at
-    public float _height = 8.0f;
+    [SerializeField]
+    private float _height = 8.0f;
+
     public GameObject _laserPrefab;
 
     
@@ -26,6 +28,13 @@ public class Laser : MonoBehaviour
 
         if(transform.position.y > _height)
         {
+
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+
+
             Destroy(_laserPrefab);
         }
     }
