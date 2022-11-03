@@ -8,5 +8,6 @@ public class MainMenu : MonoBehaviour
     {
         //load game scene
         SceneManager.LoadScene(1);//main game scene
+        // in a list, 0 is one, so "1" is the second variable in the index.
     }
 }

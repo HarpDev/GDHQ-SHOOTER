@@ -187,8 +187,7 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        //if space key is hit
-        //spawm game object
+        //FIRING SCRIPT
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
@@ -231,6 +230,7 @@ public class Player : MonoBehaviour
         //transform.Translate(Vector3.left * horizontalInput * _speed * Time.deltaTime);
         //transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
 
+        //checks to see if speed is active at all.
         if (_isSpeedActive == false)
         {
             transform.Translate(direction * _speed * Time.deltaTime);
@@ -253,7 +253,7 @@ public class Player : MonoBehaviour
         
         
          }
-
+        //Script does the teleport across boundaries thing
          if (transform.position.x > 11.3f)
         {
 

@@ -6,18 +6,25 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _enemyPrefab;
+
     [SerializeField]
     private GameObject _enemyContainer;
+
     [SerializeField]
     private float _spawnRate = 0.5f;
+
     [SerializeField]
     private GameObject _tripleShotPowerUpPrefab;
+
     [SerializeField]
     private GameObject _speedPowerUpPrefab;
+
     [SerializeField]
     private GameObject _shieldPowerUpPrefab;
+
     [SerializeField]
     private GameObject _waveShotPowerUpPrefab;
+
     [SerializeField]
     private GameObject _shotgunPowerUpPrefab;
 
@@ -27,7 +34,9 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Powerup
         StartCoroutine(SpawnRoutine());
+        //Enemy
         StartCoroutine(SpawnEnemyRoutine());
     }
 
@@ -56,16 +65,21 @@ public class SpawnManager : MonoBehaviour
     {
          while (_stopSpawning == false)
         {
-            //1
+
+            //The reason why each powerup is using a different random.range variable is there is a glitch with powerups spawning on top of each other.
+
+            //Random 1
             Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            //2
+            //Random 2
             Vector3 postToSpawn2 = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            //3
+            //Random 3
             Vector3 postToSpawn3 = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            //4
+            //Random 4
             Vector3 postToSpawn4 = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            //5
+            //Random 5
             Vector3 postToSpawn5 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+
+
 
             //triple shot
             Instantiate(_tripleShotPowerUpPrefab, postToSpawn, Quaternion.identity);

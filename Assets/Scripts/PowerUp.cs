@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    //This is the speed the powerup falls.
     [SerializeField]
     private float _speed = 3.0f;
     
 
-    //ID for Powerups
-    //0 = Triple Shot
-    //1 = Speed
-    //2 = Shields
+  
     [SerializeField]
     private int powerupID;  
 
@@ -45,23 +43,28 @@ public class PowerUp : MonoBehaviour
             {
                 if (powerupID == 0)
                 {
-                  player.TripleShotActive();
+                    //Activate Triple Shot
+                    player.TripleShotActive();
                 }
                 //else if 1
                 else if (powerupID == 1)
                 {
+                    //Activate Speed
                     player.SpeedActive();
                 }
                 else if (powerupID == 2)
                 {
+                    //Activate Shield
                     player.ShieldActive();
                 }
                 else if (powerupID == 3)
                 {
+                    //Activate Wave Shot 
                     player.WaveShotActive();
                 }
                 else if (powerupID == 4)
                 {
+                    //Activate Shotgun
                     player.ShotgunActive();
                 }
 
