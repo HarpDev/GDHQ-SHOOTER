@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 1972660202430545927}
   - component: {fileID: 1972660202430545924}
   - component: {fileID: 1972660202430546041}
+  - component: {fileID: -5143669919240889235}
   m_Layer: 0
-  m_Name: TripleShot_Powerup
+  m_Name: Speed_Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   m_LocalPosition: {x: 1.33, y: 4.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1972660203231110773}
+  - {fileID: 1561589253789736450}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,7 +77,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
---- !u!1 &1972660203231110770
+  powerupID: 1
+--- !u!114 &-5143669919240889235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972660202430545925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbeabff7813a2b4fbcaace936394059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 0}
+  _livesText: {fileID: 0}
+--- !u!1 &5179083971953213249
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,38 +100,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1972660203231110773}
-  - component: {fileID: 1972660203231110775}
-  - component: {fileID: 1972660203231110772}
-  - component: {fileID: 1972660203231110774}
+  - component: {fileID: 1561589253789736450}
+  - component: {fileID: 3222700978273529110}
+  - component: {fileID: 6459380682590770681}
+  - component: {fileID: 586373646251298614}
   m_Layer: 0
-  m_Name: text
+  m_Name: New Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1972660203231110773
+--- !u!4 &1561589253789736450
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1972660203231110770}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15762, y: 0.15762, z: 0.15762}
+  m_GameObject: {fileID: 5179083971953213249}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 0.15, z: 0}
+  m_LocalScale: {x: 0.21778715, y: 0.21778715, z: 0.21778715}
   m_Children: []
   m_Father: {fileID: 1972660202430545926}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1972660203231110775
+--- !u!23 &3222700978273529110
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1972660203231110770}
+  m_GameObject: {fileID: 5179083971953213249}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -148,15 +164,15 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!102 &1972660203231110772
+--- !u!102 &6459380682590770681
 TextMesh:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1972660203231110770}
-  m_Text: TRIPLE SHOT
+  m_GameObject: {fileID: 5179083971953213249}
+  m_Text: SPEED
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -169,18 +185,18 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
---- !u!95 &1972660203231110774
+    rgba: 4278190335
+--- !u!95 &586373646251298614
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1972660203231110770}
+  m_GameObject: {fileID: 5179083971953213249}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b97b5a3ca01d12640bd218b8fc81e1c7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2964856c6f4d93c4cbafdb1062fb6213, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -12,6 +12,16 @@ public class SpawnManager : MonoBehaviour
     private float _spawnRate = 0.5f;
     [SerializeField]
     private GameObject _tripleShotPowerUpPrefab;
+    [SerializeField]
+    private GameObject _speedPowerUpPrefab;
+    [SerializeField]
+    private GameObject _shieldPowerUpPrefab;
+    [SerializeField]
+    private GameObject _waveShotPowerUpPrefab;
+    [SerializeField]
+    private GameObject _shotgunPowerUpPrefab;
+
+    
 
     private bool _stopSpawning = false;
     // Start is called before the first frame update
@@ -46,9 +56,28 @@ public class SpawnManager : MonoBehaviour
     {
          while (_stopSpawning == false)
         {
+            //1
             Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            //2
+            Vector3 postToSpawn2 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            //3
+            Vector3 postToSpawn3 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            //4
+            Vector3 postToSpawn4 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            //5
+            Vector3 postToSpawn5 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+
+            //triple shot
             Instantiate(_tripleShotPowerUpPrefab, postToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(3, 8));
+            //speed
+            Instantiate(_speedPowerUpPrefab, postToSpawn2, Quaternion.identity);
+            //shield
+            Instantiate(_shieldPowerUpPrefab, postToSpawn3, Quaternion.identity);
+            //waveshot
+            Instantiate(_waveShotPowerUpPrefab, postToSpawn4, Quaternion.identity);
+            //shotgun
+            Instantiate(_shotgunPowerUpPrefab, postToSpawn5, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(1, 3));
 
         }
     }

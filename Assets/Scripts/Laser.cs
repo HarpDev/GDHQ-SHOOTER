@@ -6,6 +6,7 @@ public class Laser : MonoBehaviour
 {
     // Start is called before the first frame update
     //speed variable of 8
+    [SerializeField]
     private float _speed = 8.0f;
     //variable at which the height the laser is destroyed at
     [SerializeField]
