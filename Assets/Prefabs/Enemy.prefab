@@ -4851,7 +4851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8abc4b8d5befcfb43a8c94c44a5f3cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _anim: {fileID: 0}
   _speed: 5
+  explosionEffect: {fileID: 3646328463805356083}
   _isLevel2Active: 0
 --- !u!54 &313999793
 Rigidbody:

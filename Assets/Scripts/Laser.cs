@@ -12,13 +12,13 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float _height = 8.0f;
 
+    [SerializeField]
+    private bool _isEnemyLaser;
+
     public GameObject _laserPrefab;
 
     
-    void Start()
-    {
-        
-    }
+   
 
     // Update is called once per frame
     void Update()
@@ -35,8 +35,13 @@ public class Laser : MonoBehaviour
                 Destroy(transform.parent.gameObject);
             }
 
-
+         
             Destroy(_laserPrefab);
         }
     }
+    public bool IsEnemyLaser()
+    {
+        return _isEnemyLaser;
+    }
+
 }

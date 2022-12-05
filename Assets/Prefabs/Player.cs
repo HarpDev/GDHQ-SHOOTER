@@ -5,12 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+
     [SerializeField]
-    private float _speed = 8f;
+    private AudioClip _laserSoundClip;
+
+    [SerializeField]
+    private float _sizeDecreaseRate = 0.01f;
+    
+
+    [SerializeField]
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private float _speed = 10f;
     [SerializeField]
     private float _speedMultiplier = 2;
 
 
+    [SerializeField]
+    private GameObject _explosionPrefab;
 
 
     [SerializeField]
@@ -32,8 +45,14 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
+
+    public float _ammoCount = 15;
+
     [SerializeField]
-    private int _lives = 3;
+    private float _ammoPowerupAmount = 15;
+
+    [SerializeField]
+    public int _lives = 3;
     private SpawnManager _spawnManager;
     [SerializeField]
     private bool _isTripleShotActive = false;
@@ -47,11 +66,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speedTime = 5.0f;
 
+
+    public float _healthBack = 1;
+
     [SerializeField]
     private bool _isShieldActive = false;
 
     [SerializeField]
     private bool _isShotgunActive = false;
+
+    [SerializeField]
+    public bool _isGunActive = true;
 
     [SerializeField]
     private GameObject _shieldVisualizer;
@@ -60,15 +85,26 @@ public class Player : MonoBehaviour
     private int _score;
 
 
+
+    [SerializeField]
+    private float degreesPerSecond = 900f;
+
    
 
     private UIManager _uiManager;
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Health")
+        {
+            _lives++;
+        }
+    }
 
     public void Damage()
         {
-            _lives--;
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        _lives--;
         //check if dead
         _uiManager.UpdateLives(_lives);
         if (_lives < 1)
@@ -79,11 +115,16 @@ public class Player : MonoBehaviour
             else if (_isShieldActive == true)
         {
             ShieldActive();
+            
+            degreesPerSecond = degreesPerSecond + 20f;
+
+
             _lives++;
         }
             else if (_isShieldActive == false)
         {
             _shieldVisualizer.SetActive(false);
+            degreesPerSecond = 10f;
         }
             
             
@@ -95,15 +136,33 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotPowerDownRoutine());
     }
 
+
+    public void HealthPowerupActive()
+    {
+        
+     _lives++;
+    }
+
+
     public void WaveShotActive()
     {
         _isWaveShotActive = true;
         StartCoroutine(WaveShotPowerDownRoutine());
     }
 
+   
+
+
     public void SpeedActive()
     {
         _isSpeedActive = true;
+        
+        StartCoroutine(SpeedPowerDownRoutine());
+
+    }
+    public void ammoActive()
+    {
+       _ammoCount = _ammoCount + _ammoPowerupAmount;
         
         StartCoroutine(SpeedPowerDownRoutine());
 
@@ -118,9 +177,10 @@ public class Player : MonoBehaviour
     }
     public void ShieldActive()
     {
+        
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
-
+        
         StartCoroutine(ShieldPowerDownRoutine());
 
     }
@@ -142,6 +202,7 @@ public class Player : MonoBehaviour
         _isTripleShotActive = false;
     }
 
+  
     IEnumerator ShotgunPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -164,12 +225,15 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         
         //take the current position = new pos (0, 0, 0)
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        _audioSource = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
@@ -181,17 +245,48 @@ public class Player : MonoBehaviour
             Debug.LogError("THE UI MANAGER IS NULL");
         }
 
+        if (_audioSource == null)
+        {
+            Debug.LogError("audioSource is null");
+        }
+        else
+        {
+            _audioSource.clip = _laserSoundClip;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        if (_ammoCount > -1)
+        {
+            _isGunActive = true;
+        }
+        else if (_ammoCount == -1)
+        {
+            _isGunActive = false;
+        }
+
+        
+
+        if (_isShieldActive == true)
+        {
+            _shieldVisualizer.transform.Rotate(new Vector3(degreesPerSecond, degreesPerSecond, degreesPerSecond) * Time.deltaTime);
+            
+        }
+
+
         //FIRING SCRIPT
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
-        {
-            _canFire = Time.time + _fireRate;
+        {  
+
+          if(_isGunActive = true)
+            {
+                _canFire = Time.time + _fireRate;
+            if (_ammoCount >= 0)
+            {
 
             if (_isTripleShotActive == true)
             {
@@ -210,7 +305,16 @@ public class Player : MonoBehaviour
                 Instantiate(_shotgunPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
             }
 
+                    _ammoCount--;
+
+            _audioSource.Play();
+
+            }
+            }  
+            
            
+         
+          
 
 
         }
@@ -221,7 +325,8 @@ public class Player : MonoBehaviour
 
         }
 
-
+        //Shift to sprint
+       
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -239,9 +344,18 @@ public class Player : MonoBehaviour
         {
             transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
         }
-        
+         if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
 
-        if (transform.position.y >= 0)
+
+
+            if (transform.position.y >= 0)
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
 

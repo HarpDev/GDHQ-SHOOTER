@@ -10,4 +10,18 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);//main game scene
         // in a list, 0 is one, so "1" is the second variable in the index.
     }
+
+    public void ExitGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+
+        }
+        
+       
+    }
+
+        
+        
 }

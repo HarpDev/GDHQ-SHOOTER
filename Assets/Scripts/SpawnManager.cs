@@ -8,13 +8,28 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyPrefab;
 
     [SerializeField]
-    private GameObject _enemyContainer;
+    private GameObject _lvl2EnemyPrefab;
 
     [SerializeField]
-    private float _spawnRate = 0.5f;
+    public bool _isLevel2Active = false;
+
+    [SerializeField]
+    private GameObject _enemyContainer;
+
+
+
+    [SerializeField]
+    private float _spawnRate;
+
+    [SerializeField]
+    private float _powerupSpawnRate = 0.5f;
 
     [SerializeField]
     private GameObject _tripleShotPowerUpPrefab;
+
+
+    [SerializeField]
+    private GameObject _ammoPrefab;
 
     [SerializeField]
     private GameObject _speedPowerUpPrefab;
@@ -28,18 +43,26 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _shotgunPowerUpPrefab;
 
-    
+    [SerializeField]
+    private GameObject _healthPowerUpPrefab;
+
+
+
 
     private bool _stopSpawning = false;
-    // Start is called before the first frame update
-    void Start()
+
+   
+
+   
+
+
+    public void StartSpawning()
     {
         //Powerup
         StartCoroutine(SpawnRoutine());
         //Enemy
         StartCoroutine(SpawnEnemyRoutine());
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -52,11 +75,20 @@ public class SpawnManager : MonoBehaviour
     {
         while (_stopSpawning == false)
         {
+            _spawnRate = Random.Range(0.5f, 1f);
             Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
            GameObject newEnemy = Instantiate(_enemyPrefab, postToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(_spawnRate);
+            if (_isLevel2Active == true)
+            {
+                Vector3 postToSpawn2 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+                GameObject newEnemy2 = Instantiate(_lvl2EnemyPrefab, postToSpawn2, Quaternion.identity);
+                newEnemy2.transform.parent = _enemyContainer.transform;
+                yield return new WaitForSeconds(_spawnRate);
+            }
         }
+
 
     }
 
@@ -69,15 +101,17 @@ public class SpawnManager : MonoBehaviour
             //The reason why each powerup is using a different random.range variable is there is a glitch with powerups spawning on top of each other.
 
             //Random 1
-            Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
             //Random 2
-            Vector3 postToSpawn2 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Vector3 postToSpawn2 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
             //Random 3
-            Vector3 postToSpawn3 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Vector3 postToSpawn3 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
             //Random 4
-            Vector3 postToSpawn4 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Vector3 postToSpawn4 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
             //Random 5
-            Vector3 postToSpawn5 = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Vector3 postToSpawn5 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
+            //Random 6
+            Vector3 postToSpawn6 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
 
 
 
@@ -91,7 +125,11 @@ public class SpawnManager : MonoBehaviour
             Instantiate(_waveShotPowerUpPrefab, postToSpawn4, Quaternion.identity);
             //shotgun
             Instantiate(_shotgunPowerUpPrefab, postToSpawn5, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(1, 3));
+            //ammo
+            Instantiate(_ammoPrefab, postToSpawn5, Quaternion.identity);
+            //health
+            Instantiate(_healthPowerUpPrefab, postToSpawn6, Quaternion.identity);
+            yield return new WaitForSeconds(_powerupSpawnRate);
 
         }
     }
