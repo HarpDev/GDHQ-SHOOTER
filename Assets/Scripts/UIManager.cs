@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
 
 
     [SerializeField]
-    private bool _isCDActive = true;
+    public bool _isCDActive = true;
 
 
     [SerializeField]
@@ -37,8 +37,10 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Player player = gameObject.transform.GetComponent<Player>();
-        _isFireActive = player._isGunActive;
         
+       
+       
+       
 
         Debug.Log(_scoreText, this.gameObject);
         //assign text component to handle
@@ -48,7 +50,10 @@ public class UIManager : MonoBehaviour
         _deadText.gameObject.SetActive(false);
     }
 
-
+     public void SetHeatSlider(int value)
+        {
+            _coolSlider.maxValue = value;
+        }
 
     // Update is called once per frame
     public void UpdateScore(int playerScore)
@@ -105,6 +110,6 @@ public class UIManager : MonoBehaviour
 
     }
 
-
+   
 
 }

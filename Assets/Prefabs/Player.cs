@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
+    public UIManager _UI;
+
     [SerializeField]
     private AudioClip _laserSoundClip;
 
@@ -24,6 +26,12 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _explosionPrefab;
+
+
+
+    [SerializeField]
+    private Animation _shakeAnim;
+
 
 
     [SerializeField]
@@ -45,6 +53,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
+    
 
     public float _ammoCount = 15;
 
@@ -123,6 +132,8 @@ public class Player : MonoBehaviour
         }
             else if (_isShieldActive == false)
         {
+
+            _shakeAnim.Play("Camera_Shake");
             _shieldVisualizer.SetActive(false);
             degreesPerSecond = 10f;
         }
@@ -227,6 +238,11 @@ public class Player : MonoBehaviour
     {
 
         
+    int currentHeat = 0;
+    int totalvalue = 1;
+
+       // UIManager.SetHeatSlider(totalValue);
+
         //take the current position = new pos (0, 0, 0)
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
@@ -278,45 +294,49 @@ public class Player : MonoBehaviour
 
 
         //FIRING SCRIPT
+        if (_UI._isCDActive == true)
+        {
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
-        {  
 
-          if(_isGunActive = true)
-            {
-                _canFire = Time.time + _fireRate;
-            if (_ammoCount >= 0)
+            if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
             {
 
-            if (_isTripleShotActive == true)
-            {
-                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                if (_isGunActive = true)
+                {
+                    _canFire = Time.time + _fireRate;
+                    if (_ammoCount >= 0)
+                    {
+
+                        if (_isTripleShotActive == true)
+                        {
+                            Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                        }
+                        else
+                        {
+                            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+                        }
+                        if (_isWaveShotActive == true)
+                        {
+                            Instantiate(_waveShotPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+                        }
+                        else if (_isShotgunActive == true)
+                        {
+                            Instantiate(_shotgunPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+                        }
+
+                        _ammoCount--;
+
+                        _audioSource.Play();
+
+                    }
+                }
+
+
+
+
+
+
             }
-            else
-            {
-                Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
-            }
-            if (_isWaveShotActive == true)
-            {
-                Instantiate(_waveShotPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
-            }
-            else if (_isShotgunActive == true)
-            {
-                Instantiate(_shotgunPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
-            }
-
-                    _ammoCount--;
-
-            _audioSource.Play();
-
-            }
-            }  
-            
-           
-         
-          
-
-
         }
         //restart script
         if (Input.GetKeyDown(KeyCode.R))

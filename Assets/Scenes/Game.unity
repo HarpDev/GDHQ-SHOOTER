@@ -795,7 +795,8 @@ MonoBehaviour:
   _deadText: {fileID: 2138096845}
   _coolSlider: {fileID: 1011405219}
   _secondWait: 1
-  _isCDActive: 1
+  _isCDActive: 0
+  _isFireActive: 1
   _livesText: {fileID: 382406093}
 --- !u!1 &577253833
 GameObject:
@@ -1162,6 +1163,8 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
+  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1311,6 +1314,41 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!95 &963194231
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b7e8ee2db47f62841b56ef15bb8baa9b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &963194232
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 4d0ca5221c216f84886acb0fabc26f00, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 4d0ca5221c216f84886acb0fabc26f00, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &980988656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2251,6 +2289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d830554f3a9df4e805a890c24ede29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _UI: {fileID: 482363955}
   _laserSoundClip: {fileID: 8300000, guid: ec978329c261a4544a71b5b651a4f074, type: 3}
   _sizeDecreaseRate: 0.01
   _audioSource: {fileID: 1508555424}
@@ -2258,6 +2297,7 @@ MonoBehaviour:
   _speedMultiplier: 2
   _explosionPrefab: {fileID: 62333393900408695, guid: 3cc4a4333bba8e844af89802c348b47c,
     type: 3}
+  _shakeAnim: {fileID: 963194232}
   _laserPrefab: {fileID: 9198275415780789948, guid: 291858c99956e754687b0cd25f87a473,
     type: 3}
   _tripleShotPrefab: {fileID: 660866352902596712, guid: 5c36393d5832df14295127f5b6e42e54,
@@ -2269,7 +2309,7 @@ MonoBehaviour:
   horizontalInput: 0
   verticalInput: 0
   _fireRate: 0
-  _ammoCount: 15
+  _ammoCount: 107.08
   _ammoPowerupAmount: 15
   _lives: 10
   _isTripleShotActive: 0
@@ -2279,7 +2319,7 @@ MonoBehaviour:
   _healthBack: 1
   _isShieldActive: 0
   _isShotgunActive: 0
-  _isGunActive: 0
+  _isGunActive: 1
   _shieldVisualizer: {fileID: 2068061924}
   _score: 0
   degreesPerSecond: 1
@@ -3022,6 +3062,7 @@ GameObject:
   - component: {fileID: 2068061927}
   - component: {fileID: 2068061926}
   - component: {fileID: 2068061925}
+  - component: {fileID: 2068061929}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -3038,7 +3079,7 @@ BoxCollider:
   m_GameObject: {fileID: 2068061924}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -3104,6 +3145,22 @@ Transform:
   m_Father: {fileID: 1508555422}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2068061929
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068061924}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2112579407 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3224484587535740699, guid: 656802544baa8c04ab56fecf1229bad4,
@@ -3182,7 +3239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2138096844
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3318,7 +3375,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2565275657199313918, guid: a61ab3b50ea9daf44aca652e6b1157bf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a61ab3b50ea9daf44aca652e6b1157bf, type: 3}
 --- !u!1001 &3224484585695955028
 PrefabInstance:
