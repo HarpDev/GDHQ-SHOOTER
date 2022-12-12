@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
    
 
     [SerializeField]
-    private float _speed = 4.0f;
+    private float _speed = 8.0f;
 
     [SerializeField]
     private GameObject explosionEffect;

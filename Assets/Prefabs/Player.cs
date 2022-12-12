@@ -13,7 +13,14 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _sizeDecreaseRate = 0.01f;
-    
+
+   
+    //slider
+    private float currentHeat = 0f;
+    [SerializeField]
+    private int totalHeat = 100;
+
+
 
     [SerializeField]
     private AudioSource _audioSource;
@@ -23,17 +30,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speedMultiplier = 2;
 
-
+    //Pla
     [SerializeField]
     private GameObject _explosionPrefab;
-
-
-
+    //CameraShake
     [SerializeField]
-    private Animation _shakeAnim;
-
-
-
+    private Animator _shakeAnim;
+    //LaserPrefab
     [SerializeField]
     private GameObject _laserPrefab;
 
@@ -53,7 +56,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
-    
+
 
     public float _ammoCount = 15;
 
@@ -94,14 +97,15 @@ public class Player : MonoBehaviour
     private int _score;
 
 
+    private bool _coolDownActive = false;
+
 
     [SerializeField]
     private float degreesPerSecond = 900f;
 
-   
+
 
     private UIManager _uiManager;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Health")
@@ -109,76 +113,65 @@ public class Player : MonoBehaviour
             _lives++;
         }
     }
-
     public void Damage()
-        {
+    {
         Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         _lives--;
         //check if dead
         _uiManager.UpdateLives(_lives);
         if (_lives < 1)
-            {
+        {
             _spawnManager.OnPlayerDeath();
-                Destroy(this.gameObject);
-            }
-            else if (_isShieldActive == true)
+            Destroy(this.gameObject);
+        }
+        else if (_isShieldActive == true)
         {
             ShieldActive();
-            
+
             degreesPerSecond = degreesPerSecond + 20f;
 
 
             _lives++;
         }
-            else if (_isShieldActive == false)
+        else if (_isShieldActive == false)
         {
-
+           
             _shakeAnim.Play("Camera_Shake");
             _shieldVisualizer.SetActive(false);
             degreesPerSecond = 10f;
         }
-            
-            
-         }
-    
+
+
+    }
     public void TripleShotActive()
     {
         _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
-
-
     public void HealthPowerupActive()
     {
-        
-     _lives++;
+
+        _lives++;
     }
-
-
     public void WaveShotActive()
     {
         _isWaveShotActive = true;
         StartCoroutine(WaveShotPowerDownRoutine());
     }
-
-   
-
-
     public void SpeedActive()
     {
         _isSpeedActive = true;
-        
+
         StartCoroutine(SpeedPowerDownRoutine());
 
     }
     public void ammoActive()
     {
-       _ammoCount = _ammoCount + _ammoPowerupAmount;
-        
+        _ammoCount = _ammoCount + _ammoPowerupAmount;
+
         StartCoroutine(SpeedPowerDownRoutine());
 
     }
-
     public void ShotgunActive()
     {
         _isShotgunActive = true;
@@ -188,60 +181,46 @@ public class Player : MonoBehaviour
     }
     public void ShieldActive()
     {
-        
+
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
-        
+
         StartCoroutine(ShieldPowerDownRoutine());
 
     }
-
-
     IEnumerator ShieldPowerDownRoutine()
     {
         yield return new WaitForSeconds(10.0f);
         _isShieldActive = false;
         _shieldVisualizer.SetActive(false);
     }
-
-
-
-
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
         _isTripleShotActive = false;
     }
-
-  
     IEnumerator ShotgunPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
         _isShotgunActive = false;
     }
-
     IEnumerator WaveShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
         _isWaveShotActive = false;
     }
-
     IEnumerator SpeedPowerDownRoutine()
     {
-        
+
         yield return new WaitForSeconds(_speedTime);
         _isSpeedActive = false;
     }
-
     // Start is called before the first frame update
     void Start()
     {
 
-        
-    int currentHeat = 0;
-    int totalvalue = 1;
 
-       // UIManager.SetHeatSlider(totalValue);
+
 
         //take the current position = new pos (0, 0, 0)
         transform.position = new Vector3(0, 0, 0);
@@ -255,7 +234,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("the spawn manager is null");
         }
-        
+
         if (_uiManager == null)
         {
             Debug.LogError("THE UI MANAGER IS NULL");
@@ -269,8 +248,10 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
         }
+        //sets max value to max
+        _uiManager.SetHeatSlider(totalHeat);
+        _uiManager.SetCurrentHeat(currentHeat);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -284,24 +265,71 @@ public class Player : MonoBehaviour
             _isGunActive = false;
         }
 
-        
+
 
         if (_isShieldActive == true)
         {
             _shieldVisualizer.transform.Rotate(new Vector3(degreesPerSecond, degreesPerSecond, degreesPerSecond) * Time.deltaTime);
-            
+
         }
 
 
-        //FIRING SCRIPT
-        if (_UI._isCDActive == true)
-        {
 
+
+
+
+
+        
+        CalculateFiring();
+        CalculateMovement();
+
+
+
+ //restart script
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+         
+
+       
+
+       
+
+
+
+    }
+    IEnumerator CoolDownRoutine()
+    {
+        yield return new WaitForSeconds(1f);
+        _coolDownActive = false;
+        //once, end of slider is reached, wait x seconds before being able to fire again
+    }
+    //method to add 10 to the score
+    public void Addscore(int points)
+    {
+        //add score
+        _score += points;
+        _uiManager.UpdateScore(_score);
+    }
+    private void CalculateFiring()
+    {
+
+
+        //FIRING SCRIPT
+        if (_coolDownActive == false)
+        {
+            if (currentHeat > 0)
+            {
+                currentHeat -= 0.3f; 
+                _uiManager.SetCurrentHeat(currentHeat);
+            }
 
             if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
             {
 
-                if (_isGunActive = true)
+                if (_isGunActive == true)
                 {
                     _canFire = Time.time + _fireRate;
                     if (_ammoCount >= 0)
@@ -328,33 +356,33 @@ public class Player : MonoBehaviour
 
                         _audioSource.Play();
 
+                        currentHeat += 5;
+                      
+                        if (currentHeat >= totalHeat)
+                        {
+
+                            _coolDownActive = true;
+                            StartCoroutine(CoolDownRoutine());
+                        }
+
                     }
                 }
 
-
-
-
-
-
             }
-        }
-        //restart script
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         }
-
+    }
+    private void CalculateMovement()
+    {
         //Shift to sprint
-       
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0); 
+        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         //transform.Translate(Vector3.left * horizontalInput * _speed * Time.deltaTime);
         //transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
-
         //checks to see if speed is active at all.
         if (_isSpeedActive == false)
         {
@@ -364,7 +392,7 @@ public class Player : MonoBehaviour
         {
             transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
         }
-         if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
         }
@@ -372,42 +400,25 @@ public class Player : MonoBehaviour
         {
             transform.Translate(direction * _speed * Time.deltaTime);
         }
-
-
-
-            if (transform.position.y >= 0)
+        if (transform.position.y >= 0)
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
 
         }
-        else if (transform.position.y <= -3.8f) 
+        else if (transform.position.y <= -3.8f)
         {
 
             transform.position = new Vector3(transform.position.x, -3.8f, 0);
-        
-        
-         }
+        }
         //Script does the teleport across boundaries thing
-         if (transform.position.x > 11.3f)
+        if (transform.position.x > 11.3f)
         {
-
             transform.position = new Vector3(-11.3f, transform.position.y, 0);
         }
-        else if (transform.position.x < -11.3f) 
+        else if (transform.position.x < -11.3f)
         {
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
-
-    
-
     }
-
-    //method to add 10 to the score
-    public void Addscore(int points)
-    {
-        _score += points;
-        _uiManager.UpdateScore(_score);
-    }
-
-    
 }
+

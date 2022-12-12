@@ -17,32 +17,31 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyContainer;
 
 
-
+    //SpawnRate
     [SerializeField]
-    private float _spawnRate;
-
+    private float _spawnRate = 0.5f;
+    //SpawnRateUp
     [SerializeField]
     private float _powerupSpawnRate = 0.5f;
-
+    //3Up
     [SerializeField]
     private GameObject _tripleShotPowerUpPrefab;
-
-
+    //AmmoUp
     [SerializeField]
     private GameObject _ammoPrefab;
-
+    //SpeedUp
     [SerializeField]
     private GameObject _speedPowerUpPrefab;
-
+    //ShieldUp
     [SerializeField]
     private GameObject _shieldPowerUpPrefab;
-
+    //WaveUp
     [SerializeField]
     private GameObject _waveShotPowerUpPrefab;
-
+    //ShotUp
     [SerializeField]
     private GameObject _shotgunPowerUpPrefab;
-
+    //HealthUp
     [SerializeField]
     private GameObject _healthPowerUpPrefab;
 
@@ -88,33 +87,24 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(_spawnRate);
             }
         }
-
-
     }
-
-
     IEnumerator SpawnEnemyRoutine()
     {
          while (_stopSpawning == false)
         {
-
             //The reason why each powerup is using a different random.range variable is there is a glitch with powerups spawning on top of each other.
-
             //Random 1
-            Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
+            Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 30), 0);
             //Random 2
-            Vector3 postToSpawn2 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
+            Vector3 postToSpawn2 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 30), 0);
             //Random 3
-            Vector3 postToSpawn3 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
+            Vector3 postToSpawn3 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 30), 0);
             //Random 4
-            Vector3 postToSpawn4 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
+            Vector3 postToSpawn4 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 30), 0);
             //Random 5
-            Vector3 postToSpawn5 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
+            Vector3 postToSpawn5 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 30), 0);
             //Random 6
-            Vector3 postToSpawn6 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 10), 0);
-
-
-
+            Vector3 postToSpawn6 = new Vector3(Random.Range(-8f, 8f), Random.Range(7, 30), 0);
             //triple shot
             Instantiate(_tripleShotPowerUpPrefab, postToSpawn, Quaternion.identity);
             //speed
@@ -130,15 +120,10 @@ public class SpawnManager : MonoBehaviour
             //health
             Instantiate(_healthPowerUpPrefab, postToSpawn6, Quaternion.identity);
             yield return new WaitForSeconds(_powerupSpawnRate);
-
         }
     }
-
     public void OnPlayerDeath()
     {
         _stopSpawning = true; 
     }
-      
-    
-
 }
