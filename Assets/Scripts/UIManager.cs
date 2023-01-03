@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+  
+
     //handle to text
     [SerializeField]
     private Text _scoreText;
@@ -28,11 +31,14 @@ public class UIManager : MonoBehaviour
     //LivesTask
     [SerializeField]
     private Text _livesText;
+    [SerializeField]
+    private Text _ammoText;
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log(_scoreText, this.gameObject);
         //assign text component to handle
+        _ammoText.text = "Ammo: " + 0f;
         _scoreText.text = "Score: " + 0;
         _deadScoreText.text = "score: " + 0;
         _livesText.text = "Lives: " ;
@@ -60,43 +66,55 @@ public class UIManager : MonoBehaviour
             _deadText.gameObject.SetActive(true);
         }
     }
-/*
-    private void Update()
+    public void UpdateAmmo(float playerAmmo)
     {
-
-        
-        
-        if (_isCDActive == true)
-        {
-            if (_isFireActive == true)
-            {
-                
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                     _coolSlider.value += 0.12f;
-                     }
-            }
-            
-        }
-         
-
-        if (_coolSlider.value == 1f)
-        {
-            _isCDActive = false;
-            
-            
-        }
-        if (_coolSlider.value == 0f)
-        {
-                _isCDActive = true;
-            
-        }
-       new WaitForSeconds(_secondWait);
-        _coolSlider.value -= 0.005f;
-        
-
+        _ammoText.text = "AMMO: " + playerAmmo.ToString();
     }
 
-   
-    */
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+    /*
+        private void Update()
+        {
+
+
+
+            if (_isCDActive == true)
+            {
+                if (_isFireActive == true)
+                {
+
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                         _coolSlider.value += 0.12f;
+                         }
+                }
+
+            }
+
+
+            if (_coolSlider.value == 1f)
+            {
+                _isCDActive = false;
+
+
+            }
+            if (_coolSlider.value == 0f)
+            {
+                    _isCDActive = true;
+
+            }
+           new WaitForSeconds(_secondWait);
+            _coolSlider.value -= 0.005f;
+
+
+        }
+
+
+        */
 }

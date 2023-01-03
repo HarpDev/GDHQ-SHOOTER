@@ -112,6 +112,10 @@ public class Player : MonoBehaviour
         {
             _lives++;
         }
+        if (other.tag == "NegHealth")
+        {
+            _lives--;
+        } 
     }
     public void Damage()
     {
@@ -255,7 +259,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        _uiManager.UpdateLives(_lives);
         if (_ammoCount > -1)
         {
             _isGunActive = true;
@@ -334,29 +338,34 @@ public class Player : MonoBehaviour
                     _canFire = Time.time + _fireRate;
                     if (_ammoCount >= 0)
                     {
-
+                        
                         if (_isTripleShotActive == true)
                         {
                             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                            currentHeat += 10;
                         }
                         else
                         {
                             Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+                            currentHeat += 5;
                         }
                         if (_isWaveShotActive == true)
                         {
                             Instantiate(_waveShotPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+                            currentHeat += 20;
                         }
                         else if (_isShotgunActive == true)
                         {
                             Instantiate(_shotgunPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+                            currentHeat += 20;
                         }
 
                         _ammoCount--;
+                        _uiManager.UpdateAmmo(_ammoCount);
 
                         _audioSource.Play();
 
-                        currentHeat += 5;
+                        
                       
                         if (currentHeat >= totalHeat)
                         {

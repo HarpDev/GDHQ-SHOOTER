@@ -4783,7 +4783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5811398163055167120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.12103, z: 0.014557}
+  m_LocalPosition: {x: 0, y: 0.12103, z: -0.035}
   m_LocalScale: {x: 0.36151555, y: 0.36151555, z: 0.36151555}
   m_Children:
   - {fileID: 1215462569268833068}
@@ -4852,9 +4852,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anim: {fileID: 0}
+  _isReverserType: 0
+  _isShieldActive: 0
+  _isBackwardsActive: 0
   _speed: 8
+  target: {fileID: 0}
   explosionEffect: {fileID: 3646328463805356083}
-  _isLevel2Active: 0
+  _isLevel2Active: 1
+  _isShieldEnemy: 0
 --- !u!54 &313999793
 Rigidbody:
   m_ObjectHideFlags: 0

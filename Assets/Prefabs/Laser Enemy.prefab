@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 454434772466353400}
   - component: {fileID: -4110845816947034629}
   - component: {fileID: 4327714623653288975}
-  - component: {fileID: -3604073682717136337}
   - component: {fileID: 7432163012108234888}
   m_Layer: 0
   m_Name: Laser Enemy
@@ -210,22 +209,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-3604073682717136337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9198275415780789948}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8abc4b8d5befcfb43a8c94c44a5f3cf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _anim: {fileID: 0}
-  _speed: 8
-  explosionEffect: {fileID: 0}
-  _isLevel2Active: 0
 --- !u!114 &7432163012108234888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +222,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anim: {fileID: 0}
+  _isReverserType: 0
+  _isShieldActive: 0
+  _isBackwardsActive: 0
+  _isBullet: 1
   _speed: 6
+  target: {fileID: 0}
   explosionEffect: {fileID: 0}
   _isLevel2Active: 0
+  _isShieldEnemy: 0
