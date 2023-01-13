@@ -8,7 +8,12 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     private float _speed = 3.0f;
 
- 
+    
+
+    //player Target
+    private Player _playerTarget;
+
+
 
     [SerializeField]
     private int powerupID;
@@ -17,23 +22,56 @@ public class PowerUp : MonoBehaviour
     private AudioClip _clip;
 
     // Start is called before the first frame update
-    
+    private void Start()
+    {
+        _playerTarget = GameObject.Find("Player").GetComponent<Player>();
+    }
+
+
+
+
 
     // Update is called once per frame
     void Update()
     {
+           
+        if (Input.GetKey(KeyCode.E))
+        {
+            //when player holds down E key, Powerups move to player
+            var step = _speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, _playerTarget.transform.position, step);
+          
+        }
+        else
+        {
+           
+            //move down as usual
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+
+        if (Vector3.Distance(transform.position, _playerTarget.transform.position) < 0.001f)
+        {
+            
+            _playerTarget.transform.position *= -1.0f;
+        }
         // move down at a speed of 3 
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
         // when we leave the screen, destroy
         if (transform.position.y <= -4.5f)
         {
             Destroy(this.gameObject);
+            
+           
+            
         }
-
+        
     }
 
-    //ontriggercollision
-    private void OnTriggerEnter(Collider other)
+    
+
+
+//ontriggercollision
+private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

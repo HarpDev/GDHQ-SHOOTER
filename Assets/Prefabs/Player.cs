@@ -47,6 +47,9 @@ public class Player : MonoBehaviour
     private GameObject _shotgunPrefab;
 
     [SerializeField]
+    private GameObject _homingPrefab;
+
+    [SerializeField]
     private GameObject _waveShotPrefab;
 
     public float horizontalInput;
@@ -70,11 +73,16 @@ public class Player : MonoBehaviour
     private bool _isTripleShotActive = false;
 
     [SerializeField]
+    private bool _isHomingShotActive = false;
+
+    [SerializeField]
     private bool _isWaveShotActive = false;
 
     [SerializeField]
     private bool _isSpeedActive = false;
 
+    [SerializeField]
+    private bool _isLvl1Active = false;
     [SerializeField]
     private float _speedTime = 5.0f;
 
@@ -119,10 +127,12 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
+        Debug.Log("Damage");
         Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         _lives--;
-        //check if dead
         _uiManager.UpdateLives(_lives);
+        //check if dead
+
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
@@ -151,6 +161,11 @@ public class Player : MonoBehaviour
     {
         _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
+    }
+    public void HomingShotActive()
+    {
+        _isHomingShotActive = true;
+        StartCoroutine(HomingPowerDownRoutine());
     }
     public void HealthPowerupActive()
     {
@@ -198,6 +213,12 @@ public class Player : MonoBehaviour
         _isShieldActive = false;
         _shieldVisualizer.SetActive(false);
     }
+    IEnumerator HomingPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(10.0f);
+        _isHomingShotActive = false;
+        
+    }
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -222,8 +243,11 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
+        if (_isLvl1Active == true)
+        {
+            StartCoroutine(BossFightTransitionRoutine());
+        }
+        
 
 
         //take the current position = new pos (0, 0, 0)
@@ -310,6 +334,13 @@ public class Player : MonoBehaviour
         _coolDownActive = false;
         //once, end of slider is reached, wait x seconds before being able to fire again
     }
+    IEnumerator BossFightTransitionRoutine()
+    {
+        yield return new WaitForSeconds(90f);
+        SceneManager.LoadScene(2);
+        
+        //once, end of slider is reached, wait x seconds before being able to fire again
+    }
     //method to add 10 to the score
     public void Addscore(int points)
     {
@@ -358,6 +389,11 @@ public class Player : MonoBehaviour
                         {
                             Instantiate(_shotgunPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
                             currentHeat += 20;
+                        }
+                        else if (_isHomingShotActive == true)
+                        {
+                            Instantiate(_homingPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+                            currentHeat += 1;
                         }
 
                         _ammoCount--;
@@ -409,9 +445,9 @@ public class Player : MonoBehaviour
         {
             transform.Translate(direction * _speed * Time.deltaTime);
         }
-        if (transform.position.y >= 0)
+        if (transform.position.y >= 3)
         {
-            transform.position = new Vector3(transform.position.x, 0, 0);
+            transform.position = new Vector3(transform.position.x, 3, 0);
 
         }
         else if (transform.position.y <= -3.8f)

@@ -33,7 +33,13 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject explosionEffect;
 
+    [SerializeField]
+    private GameObject PowerUpEnemyPrefab;
+
     private Player _player;
+
+    [SerializeField]
+    public bool _isBossActive = false;
 
     [SerializeField]
     public bool _isLevel2Active = false;
@@ -58,10 +64,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    
-        
+  
 
-   
+
 
 
     // Update is called once per frame
@@ -107,9 +112,9 @@ public class Enemy : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-
-        //if bottom of screen respawn at top
-        if (transform.position.y <= -10f)
+        if (_isBossActive == false)
+        {
+if (transform.position.y <= -10f)
         {
             
             
@@ -132,10 +137,21 @@ public class Enemy : MonoBehaviour
             }
         }     
        
+        }
+        //if bottom of screen respawn at top
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "EnemyPickup")
+        {
+            //Spawn Enemy Type Reverser
+            Instantiate(PowerUpEnemyPrefab, transform.position, Quaternion.identity);
+            //Destroy Current Enemy Type
+            Destroy(this.gameObject);
+
+        }
         if (_isShieldActive == true)
         {
             if (other.tag == "Laser")

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8999198563781182515}
   - component: {fileID: 1354187831961833521}
   - component: {fileID: 7756714666789679167}
+  - component: {fileID: 6375323601011895659}
   m_Layer: 0
   m_Name: Player Damage
   m_TagString: Untagged
@@ -4753,3 +4754,45 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &6375323601011895659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62333393900408695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d830554f3a9df4e805a890c24ede29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UI: {fileID: 0}
+  _laserSoundClip: {fileID: 0}
+  _sizeDecreaseRate: 0.01
+  totalHeat: 100
+  _audioSource: {fileID: 0}
+  _speed: 10
+  _speedMultiplier: 2
+  _explosionPrefab: {fileID: 0}
+  _shakeAnim: {fileID: 0}
+  _laserPrefab: {fileID: 0}
+  _tripleShotPrefab: {fileID: 0}
+  _shotgunPrefab: {fileID: 0}
+  _waveShotPrefab: {fileID: 0}
+  horizontalInput: 0
+  verticalInput: 0
+  _fireRate: 0.5
+  _ammoCount: 15
+  _ammoPowerupAmount: 15
+  _lives: 3
+  _isTripleShotActive: 0
+  _isWaveShotActive: 0
+  _isSpeedActive: 0
+  _speedTime: 5
+  _healthBack: 1
+  _isShieldActive: 0
+  _isShotgunActive: 0
+  _isGunActive: 1
+  _shieldVisualizer: {fileID: 0}
+  _score: 0
+  degreesPerSecond: 900

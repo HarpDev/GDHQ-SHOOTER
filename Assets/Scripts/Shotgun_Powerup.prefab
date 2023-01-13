@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
+  _magSpeed: -4
   powerupID: 4
   _clip: {fileID: 8300000, guid: fefb7056d2c021f4d801018286f8ec32, type: 3}
 --- !u!1 &5179083971953213249

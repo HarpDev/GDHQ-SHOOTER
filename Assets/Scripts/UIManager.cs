@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         _ammoText.text = "Ammo: " + 0f;
         _scoreText.text = "Score: " + 0;
         _deadScoreText.text = "score: " + 0;
-        _livesText.text = "Lives: " ;
+        _livesText.text = "Lives: " + 0f;
         _deadText.gameObject.SetActive(false);
     }
     public void SetCurrentHeat(float value)

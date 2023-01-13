@@ -16,16 +16,18 @@ public class Laser : MonoBehaviour
     private bool _isEnemyLaser;
 
     public GameObject _laserPrefab;
+ 
 
-    
-   
 
     // Update is called once per frame
     void Update()
     {
-        //translate Laser up
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
-        //destroys laset at a set height
+        
+            //translate Laser up
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+            //destroys laset at a set height
+        
+        
 
         if(transform.position.y > _height)
         {

@@ -8,6 +8,9 @@ TagManager:
   - Laser
   - Health
   - NegHealth
+  - EnemyPickup
+  - AvoidBox
+  - EnemyRadius
   layers:
   - Default
   - TransparentFX

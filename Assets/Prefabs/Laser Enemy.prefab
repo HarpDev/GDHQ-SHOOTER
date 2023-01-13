@@ -229,5 +229,7 @@ MonoBehaviour:
   _speed: 6
   target: {fileID: 0}
   explosionEffect: {fileID: 0}
+  PowerUpEnemyPrefab: {fileID: 5811398163055167120, guid: 70b16f3ee07f05f4eb374a48ab4a6c83,
+    type: 3}
   _isLevel2Active: 0
   _isShieldEnemy: 0

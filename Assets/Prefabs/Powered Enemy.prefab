@@ -9792,9 +9792,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anim: {fileID: 0}
+  _isReverserType: 0
+  _isShieldActive: 0
+  _isBackwardsActive: 0
+  _isBullet: 0
   _speed: 8
+  target: {fileID: 0}
   explosionEffect: {fileID: 3646328463805356083}
+  PowerUpEnemyPrefab: {fileID: 5811398163055167120, guid: 70b16f3ee07f05f4eb374a48ab4a6c83,
+    type: 3}
   _isLevel2Active: 1
+  _isShieldEnemy: 0
 --- !u!54 &313999793
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9923,9 +9931,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anim: {fileID: 0}
+  _isReverserType: 0
+  _isShieldActive: 0
+  _isBackwardsActive: 0
+  _isBullet: 0
   _speed: 8
+  target: {fileID: 0}
   explosionEffect: {fileID: 2011889780433143454}
+  PowerUpEnemyPrefab: {fileID: 0}
   _isLevel2Active: 1
+  _isShieldEnemy: 0
 --- !u!54 &3451543499584910216
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10131,6 +10146,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432163012108234888, guid: 004de7acff2a12e4195700e1286949af,
+        type: 3}
+      propertyPath: PowerUpEnemyPrefab
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9198275415780789948, guid: 004de7acff2a12e4195700e1286949af,
         type: 3}
@@ -10416,6 +10436,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432163012108234888, guid: 004de7acff2a12e4195700e1286949af,
+        type: 3}
+      propertyPath: PowerUpEnemyPrefab
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9198275415780789948, guid: 004de7acff2a12e4195700e1286949af,
         type: 3}
